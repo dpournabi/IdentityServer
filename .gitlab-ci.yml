@@ -1,0 +1,40 @@
+stages:
+  - build
+
+variables:
+  NEXUS_URL: "164.138.22.156:8084"
+  IMAGE_NAME: "$NEXUS_URL/docker-repo/identityserver:$CI_PIPELINE_ID"
+  TAG_NAME: "latest"
+  #DOCKER_IMAGE: "$NEXUS_URL/docker-repo/docker:latest"
+  DOCKER_IMAGE: "$NEXUS_URL/docker-repo/dotnet/sdk:8.0"
+  DOCKER_IMAGE2: "$NEXUS_URL/docker-repo/docker:dind"
+  DOCKER_HOST: "tcp://164.138.22.156:2375"
+  DOCKER_DRIVER: "overlay2"
+
+build:
+  stage: build
+  image: $DOCKER_IMAGE
+  when: manual
+  services:
+    - name: $DOCKER_IMAGE2
+  script:
+    - echo "Starting the build process..."
+    
+    # بخش مربوط به NuGet
+    - echo "Restoring NuGet packages..."
+    - dotnet restore --disable-parallel --force --no-cache --ignore-failed-sources --verbosity detailed
+
+    # افزایش Retry برای پایداری
+    - echo "Retrying on failed package download..."
+    - for i in {1..3}; do dotnet restore || echo "Retry $i failed. Retrying..."; done
+
+    - echo "Building Docker image..."
+    - docker build -t $IMAGE_NAME .
+    - echo "Docker image built successfully!"
+
+    - echo "Logging into Nexus registry..."
+    - docker login -u "$NEXUS_USERNAME" -p "$NEXUS_PASSWORD" $NEXUS_URL
+
+    - echo "Pushing Docker image to private registry..."
+    - docker push $IMAGE_NAME
+    - echo "Docker image pushed successfully!"

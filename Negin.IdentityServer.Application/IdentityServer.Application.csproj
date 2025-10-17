@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Configurations>Debug;Release;shipping;governorate</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="User\Commands\DeleteUser\**" />
+    <EmbeddedResource Remove="User\Commands\DeleteUser\**" />
+    <None Remove="User\Commands\DeleteUser\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\Models\Result.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />-->
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="EPPlus" Version="7.2.2" />
+	<PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+	<PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.3.1" />
+	<PackageReference Include="MassTransit.Host" Version="6.3.2" />
+	<PackageReference Include="MassTransit.RabbitMQ" Version="8.2.3" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
+	<PackageReference Include="HigginsSoft.IdentityServer8" Version="8.0.4" />
+	<PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+	<PackageReference Include="HigginsSoft.IdentityServer8.AspNetIdentity" Version="8.0.4" />
+	<PackageReference Include="HigginsSoft.IdentityServer8.EntityFramework" Version="8.0.4" />
+	<PackageReference Include="HigginsSoft.IdentityServer8.EntityFramework.Storage" Version="8.0.4" />
+	<PackageReference Include="HigginsSoft.IdentityServer8.Storage" Version="8.0.4" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="8.0.7" />
+    <PackageReference Include="System.IO.Pipelines" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Negin.IdentityServer.Domain\IdentityServer.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Claims\Commands\" />
+    <Folder Include="Claims\EventHandlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Nsp.Common">
+      <HintPath>..\Library\Nsp.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

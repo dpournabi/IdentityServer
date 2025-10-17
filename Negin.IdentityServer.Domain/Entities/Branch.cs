@@ -1,0 +1,1 @@
+﻿ namespace IdentityServer.Domain.Entities;  public class Branch:BaseEntity<int> {     public  string Code { get; set; }     public  string Name { get; set; }     public  bool IsActive { get; set; }      public  int CompanyId { get; set; }     public Company Company { get; set; } } 

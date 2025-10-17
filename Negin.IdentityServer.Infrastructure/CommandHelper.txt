@@ -1,0 +1,14 @@
+dotnet tool update --global dotnet-ef
+
+cd .\Core-Domain\Negin.IdentityServer.Infrastructure
+
+dotnet ef migrations add InitialConfigurationDbMigration -c ConfigurationDbContext -o Persistence/Migrations/Configuration
+dotnet ef migrations add InitialPersistedGrantDbMigration -c PersistedGrantDbContext -o Persistence/Migrations/PersistedGrant
+dotnet ef migrations add InitialCreate -c ApplicationDbContext -o Persistence\Migrations
+
+//dotnet ef migrations add Change_Type 
+
+dotnet ef database update --context ConfigurationDbContext
+dotnet ef database update --context PersistedGrantDbContext
+dotnet ef database update --context ApplicationDbContext
+dotnet ef migrations remove --force

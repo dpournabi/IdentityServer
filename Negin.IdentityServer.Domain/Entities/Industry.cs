@@ -1,0 +1,1 @@
+﻿namespace IdentityServer.Domain.Entities;  public class Industry : BaseEntity<int> {     public  string Name { get; set; } } 
